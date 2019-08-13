@@ -104,4 +104,8 @@ function SaveToFile() {
     });*/
 
     setInterval(SaveToFile, 3000);
-    server.listen(3000);
+server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
+
+    //console.log(process.env.PORT);
+
+});
