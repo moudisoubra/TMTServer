@@ -44,66 +44,64 @@ function SaveToFile() {
         if (err) console.log(err);
         console.log('\x1b[32m%s\x1b[0m', 'Successfully Written To File');
     });
+}
 
-   /* function LoadFromFile() {
-        fs.readFile("playerProfile.txt", (err) => {
-            if(err) console.log(err);
-            console.log('\x1b[32m%s\x1b[0m', 'Successfully loaded file');
-        });
-}*/
+    /* function LoadFromFile() {
+         fs.readFile("playerProfile.txt", (err) => {
+             if(err) console.log(err);
+             console.log('\x1b[32m%s\x1b[0m', 'Successfully loaded file');
+         });
+ }*/
 
-//---------------------------------------------------- G E T ------------------------------------------------------------
+    //---------------------------------------------------- G E T ------------------------------------------------------------
 
-   /* server.get("/load", function (req, res) {
+    /* server.get("/load", function (req, res) {
+ 
+     });*/
 
-    });*/
+    server.get("/print", function (req, res) {
+        console.log("Printed all PlayerProfiles");
+        res.send({ playerProfile }); //Again, sending it as an object so unity can read it.
 
-server.get("/print", function (req, res)
-{
-    console.log("Printed all PlayerProfiles");
-    res.send({ playerProfile }); //Again, sending it as an object so unity can read it.
-
-    res.end();
-});
-
-server.get("/addPlayerProfile/:playerID/:playerScore/:hatId", function (req, res) //:xyz is the parameter which is required
-{ 
-    var playerObj = {}; //Creates an object for the player so that we can add the variables we need
-
-    playerObj.id = req.params.playerID; //Must be the same name as the :parameter
-    playerObj.score = req.params.playerScore;
-    playerObj.hatId = req.params.hatId;
-
-    playerProfile.push(playerObj); //Pushes the object we created with the user information to the array
-    res.send({ playerProfile }); //sends the array to the server. Creates it an object so the server can understand
-
-    res.end(); 
-});
-
-
-server.get("/match", function (req, res)
-{
-    if (pendingMatches.length == 0)
-    {
-        var match = {};
-        match.id = uuid();
-    }
-});
-
-/*server.get("/readFile", function (req, res) {
-
-    fs.readFile("playerProfile.txt", function (err, buf) {
-        res.send(buf.toString());
-        console.log('\x1b[32m%s\x1b[0m', 'Successfully Read File'); 
+        res.end();
     });
 
-});*/
+    server.get("/addPlayerProfile/:playerID/:playerScore/:hatId", function (req, res) //:xyz is the parameter which is required
+    {
+        var playerObj = {}; //Creates an object for the player so that we can add the variables we need
 
-//--------------------------------------------------- P O S T ------------------------------------------------------------
+        playerObj.id = req.params.playerID; //Must be the same name as the :parameter
+        playerObj.score = req.params.playerScore;
+        playerObj.hatId = req.params.hatId;
 
-/*server.post("/leaderboard", function (req, res) {
- 
-});*/
+        playerProfile.push(playerObj); //Pushes the object we created with the user information to the array
+        res.send({ playerProfile }); //sends the array to the server. Creates it an object so the server can understand
 
-setInterval(SaveToFile, 3000);
-server.listen(3000); 
+        res.end();
+    });
+
+
+    server.get("/match", function (req, res) {
+        if (pendingMatches.length == 0) {
+            var match = {};
+            match.id = uuid();
+        }
+    });
+
+    /*server.get("/readFile", function (req, res) {
+    
+        fs.readFile("playerProfile.txt", function (err, buf) {
+            res.send(buf.toString());
+            console.log('\x1b[32m%s\x1b[0m', 'Successfully Read File'); 
+        });
+    
+    });*/
+
+    //--------------------------------------------------- P O S T ------------------------------------------------------------
+
+    /*server.post("/leaderboard", function (req, res) {
+     
+    });*/
+
+    setInterval(SaveToFile, 3000);
+    server.listen(3000);
