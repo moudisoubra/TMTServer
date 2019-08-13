@@ -1,0 +1,16 @@
+{
+  "name": "tookey-server",
+  "version": "0.0.0",
+  "description": "TookeyServer",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "uuid": "3.3.2"
+  }
+}
