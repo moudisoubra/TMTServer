@@ -46,18 +46,22 @@ function SaveToFile() {
     });
 }
 
-    /* function LoadFromFile() {
+ function LoadFromFile() {
          fs.readFile("playerProfile.txt", (err) => {
              if(err) console.log(err);
              console.log('\x1b[32m%s\x1b[0m', 'Successfully loaded file');
          });
- }*/
+ }
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
 
-    /* server.get("/load", function (req, res) {
- 
-     });*/
+    server.get("/load", function (req, res) {
+        fs.readFile("playerProfile.txt", function (err, buf) {
+            var string = buf.toString();
+            res.send(JSON.parse(string));
+            console.log(string + "zis iz the load from ze file");
+        });
+     });
 
     server.get("/print", function (req, res) {
         console.log("Printed all PlayerProfiles");
@@ -103,7 +107,7 @@ function SaveToFile() {
      
     });*/
 
-    setInterval(SaveToFile, 3000);
+setInterval(SaveToFile, 3000);
 server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
 
     //console.log(process.env.PORT);
