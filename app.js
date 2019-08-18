@@ -80,7 +80,33 @@ function LoadFromFile() {
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
 
-server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res, next){
+server.get("/clearOneMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
+
+    //Sets the information based on the input from the user
+    var player_ID = req.params.playerID;
+    var player_Hat_ID = req.params.playerHatID;
+    var player_Score = req.params.playerScore;
+
+    player.findOneAndDelete({ "player_ID": player_ID }, (err, Player) => { //Finds one user
+        if (!Player) { //If we dont find the player within the database
+
+            console.log("Player already deleted!");    
+        }
+        else {
+            console.log("Found player: " + Player);
+            res.send({ Player }); //The player already exists in the database & will be sent to us.
+        }
+    }); 
+
+});
+
+server.get("/listAllMongo", function (req, res) {
+
+    res.send({ player });
+
+});
+
+server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res){
 
     var player_ID = req.params.playerID;
     var player_Hat_ID = req.params.playerHatID;
