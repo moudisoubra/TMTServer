@@ -87,7 +87,7 @@ function LoadFromFile() {
 server.get("/saveMongo/:playerID/playerHatId/:playerScore", function (req, res){
 
     var player_ID = req.params.playerID;
-    var player_Hat_Id = req.params.player_Hat_Id;
+    var player_Hat_Id = req.params.playerHatId;
     var player_Score = req.params.playerScore;
 
     player.findOne({ "player_ID": playerID }, (err, player) => { //Finds one user
@@ -96,9 +96,9 @@ server.get("/saveMongo/:playerID/playerHatId/:playerScore", function (req, res){
             console.log("Couldnt find the player.");
 
             var newPlayer = new player({ //Creates a new player
-                "player_ID": playerID,
-                "player_Hat_ID": playerHatID,
-                "player_Score": playerScore
+                "player_ID": player_ID,
+                "player_Hat_ID": player_Hat_Id,
+                "player_Score": player_Score
             });
 
             res.send({ newPlayer }); //Sends the new player as an object
