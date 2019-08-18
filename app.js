@@ -115,100 +115,108 @@ server.get("/leaderboardMongo", function (req, res) {
 
     res.send({ player });*/
 
-    player.find(function (err, Player) {
-        if (err) return console.error(err);
-        
-    res.send({ Player });
-    }).sort({ Player: -1 });
-    res.send({ Player });
+   //s db.player.find({})
+    player.find({ "player_ID": player_ID }, (err, Player) => {
 
-
-
-});
-
-
-server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
-    var playerID = req.params.playerID;
-    var playerScore = req.params.playerScore;
-
-    Player.findOne({ "player_ID": playerID }, (err, player) => {
-        if (!player) {
-            console.log("Didnt find a player with that ID");
-        }
-        else {
-            console.log("Found player: " + player);
-            player.player_Score = playerScore;
-            player.save(function (err) { if (err) console.log('Error on save!') });
-            res.send({ player });
-        }
+        Player.sort({ Player: -1 });
+        res.send({ Player });
     });
-});
+        /*player.find({
+            "player_ID": player_ID, function(err, Player) {
+                if (err) return console.error(err);
 
-server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 
-    var playerID = req.params.playerID;
-    var playerHatID = req.params.playerHatID;
 
-    Player.findOne({ "player_ID": playerID }, (err, player) => {
-        if (!player) {
-            console.log("Didnt find a player with that ID");
-        }
-        else {
-            console.log("Found player: " + player);
-            player.player_Hat_ID = playerHatID;
-            player.save(function (err) { if (err) console.log('Error on save!') });
-            res.send({ player });
-        }
+            }).sort({ Player: -1 });
+        res.send({ Player });
+        */
+
+
     });
-});
 
 
-server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
+    server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
+        var playerID = req.params.playerID;
+        var playerScore = req.params.playerScore;
 
-    var player_ID = req.params.playerID;
-    var player_Hat_ID = req.params.playerHatID;
-    var player_Score = req.params.playerScore;
-
-    player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
-        if (!Player) { //If we dont find the player within the database
-
-            console.log("Couldnt find the player.");
-
-            var newPlayer = new player({ //Creates a new player
-                "player_ID": player_ID,
-                "player_Hat_ID": player_Hat_ID,
-                "player_Score": player_Score
-            });
-
-            res.send({ newPlayer }); //Sends the new player as an object
-
-            newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
-        }
-        else {
-            console.log("Found player: " + Player); 
-            res.send({ Player }); //The player already exists in the database & will be sent to us.
-        }
-    }); 
-});
-
-server.get("/findPlayerMongo/:playerID", function (req, res) {
-
-    var playerID = req.params.playerID;
-
-    Player.findOne({ "player_ID": playerID }, (err, player) => {
-
-        if (!player) {
-            console.log("Didnt find a player with that ID");
-        }
-        else {
-            console.log("Found player: " + player);
-
-            var string = player.toString();
-
-            res.send(player);
-        }
+        Player.findOne({ "player_ID": playerID }, (err, player) => {
+            if (!player) {
+                console.log("Didnt find a player with that ID");
+            }
+            else {
+                console.log("Found player: " + player);
+                player.player_Score = playerScore;
+                player.save(function (err) { if (err) console.log('Error on save!') });
+                res.send({ player });
+            }
+        });
     });
-});
+
+    server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
+
+        var playerID = req.params.playerID;
+        var playerHatID = req.params.playerHatID;
+
+        Player.findOne({ "player_ID": playerID }, (err, player) => {
+            if (!player) {
+                console.log("Didnt find a player with that ID");
+            }
+            else {
+                console.log("Found player: " + player);
+                player.player_Hat_ID = playerHatID;
+                player.save(function (err) { if (err) console.log('Error on save!') });
+                res.send({ player });
+            }
+        });
+    });
+
+
+    server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
+
+        var player_ID = req.params.playerID;
+        var player_Hat_ID = req.params.playerHatID;
+        var player_Score = req.params.playerScore;
+
+        player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
+            if (!Player) { //If we dont find the player within the database
+
+                console.log("Couldnt find the player.");
+
+                var newPlayer = new player({ //Creates a new player
+                    "player_ID": player_ID,
+                    "player_Hat_ID": player_Hat_ID,
+                    "player_Score": player_Score
+                });
+
+                res.send({ newPlayer }); //Sends the new player as an object
+
+                newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
+            }
+            else {
+                console.log("Found player: " + Player);
+                res.send({ Player }); //The player already exists in the database & will be sent to us.
+            }
+        });
+    });
+
+    server.get("/findPlayerMongo/:playerID", function (req, res) {
+
+        var playerID = req.params.playerID;
+
+        Player.findOne({ "player_ID": playerID }, (err, player) => {
+
+            if (!player) {
+                console.log("Didnt find a player with that ID");
+            }
+            else {
+                console.log("Found player: " + player);
+
+                var string = player.toString();
+
+                res.send(player);
+            }
+        });
+    });
 
 
     server.get("/load", function (req, res) {
@@ -218,9 +226,9 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
             res.send(JSON.parse(string));
             console.log(string + "zis iz the load from ze file");
         });
-     });
+    });
 
-//----- not monogo server ----
+    //----- not monogo server ----
 
     server.get("/print", function (req, res) {
         console.log("Printed all PlayerProfiles");
@@ -252,10 +260,10 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
 
     //--------------------------------------------------- P O S T ------------------------------------------------------------
 
-setInterval(SaveToFile, 3000);
+    setInterval(SaveToFile, 3000);
 
-server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
+    server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
 
-    //console.log(process.env.PORT);
+        //console.log(process.env.PORT);
 
-});
+    });
