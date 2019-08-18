@@ -199,7 +199,8 @@ server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         else {
-            Player.sort({ score: -1 })
+            console.log("I AM REACHING THE SORTING BUT I AM NOT DOING THE SORTING");
+            Player.sort({ score: -1 });
             res.send({ score });
         }
 
