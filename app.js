@@ -201,12 +201,6 @@ server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!
     console.log("leaderboardthings");
 });
 
-    limit(10)
-
-    sort({ occupation: -1 })
-
-});
-
     server.get("/load", function (req, res) {
         fs.readFile("playerProfile.txt", function (err, buf) {
 
