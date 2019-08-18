@@ -113,7 +113,7 @@ server.get("/leaderboardMongo", function (req, res) {
         if (err) return console.error(err);
         console.log(Player);
         res.send({ Player });
-    }).sort(player);
+    }).sort({ player });
 });
 
 
