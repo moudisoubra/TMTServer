@@ -109,10 +109,7 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 
 server.get("/removeAllMongo", function (req, res) {
 
-    player.find(function (err, Player) {
-        if (err) return console.error(err);
-        Player.deleteMany({});
-    });
+    Player.deleteMany({}, function (err) { });
 });
    
 
