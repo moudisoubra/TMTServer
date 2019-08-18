@@ -107,12 +107,42 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
     });
 });
 
-server.get("/removeAllMongo", function (req, res) {
+server.get("/ChangePlayerScore/:playerID/:playerScore", function (req, res, next) {
+    var playerID = req.params.playerID;
+    var playerScore = req.params.playerScore;
 
-    player.deleteMany({}, function (err) { });
+    Player.findOne({ "player_ID": playerID }, (err, player) => {
+        if (!player) {
+            console.log("Didnt find a player with that ID");
+        }
+        else {
+            console.log("Found player: " + player);
+            player.player_Score = playerScore;
+            player.save(function (err) { if (err) console.log('Error on save!') });
+            res.send({ player });
+        }
+    });
 
 });
-   
+
+server.get("/ChangePlayerHat/:playerID/:playerHatID", function (req, res, next) {
+
+    var playerID = req.params.playerID;
+    var playerHatID = req.params.playerHatID;
+
+    Player.findOne({ "player_ID": playerID }, (err, player) => {
+        if (!player) {
+            console.log("Didnt find a player with that ID");
+        }
+        else {
+            console.log("Found player: " + player);
+            player.player_Hat_ID = playerHatID;
+            player.save(function (err) { if (err) console.log('Error on save!') });
+            res.send({ player });
+        }
+    });
+
+});
 
 
 server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res){
@@ -141,6 +171,27 @@ server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res)
             res.send({ Player }); //The player already exists in the database & will be sent to us.
         }
     }); 
+});
+
+server.get("/FindPlayer/:playerID", function (req, res, next) {
+
+    var playerID = req.params.playerID;
+
+    Player.findOne({ "player_ID": playerID }, (err, player) => {
+
+        if (!player) {
+            console.log("Didnt find a player with that ID");
+        }
+        else {
+            console.log("Found player: " + player);
+
+            var string = player.toString();
+
+            res.send(player);
+
+        }
+
+    });
 });
 
     server.get("/load", function (req, res) {
