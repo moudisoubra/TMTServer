@@ -192,12 +192,13 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
 
 server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    player.find({"player_Score" : player_Score});
+    var score;
+    player.find({ "player_Score": score});
 
     limit(10); //top 10
-    sort({ player_Score: -1 }) //Sort
+    sort({ score: -1 }) //Sort
 
-    res.send({ player_Score});
+    res.send({ score});
     console.log("leaderboardthings");
 });
 
