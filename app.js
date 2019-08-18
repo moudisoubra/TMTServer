@@ -50,9 +50,22 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
     res.end(); //You must end the response or unity will keep waiting and will not proceed.
 });
 
+
+//---------------------------------------------------- M o n g o o s e -- S c h e m a ------------------------------------------------------------
+
+// Everything in mongoose derives from schemas, so we create a schema for the player profile.
+var playerProfileMongo = new mongoose.Schema({
+    player_ID: Number,
+    player_Hat_Id: Number,
+    player_Score: Number,
+    //Add player colour
+});
+
+var player = mongoose.model('player', playerProfileMongo);
+
 //---------------------------------------------------- F U N C T I O N S ------------------------------------------------------------
 
-function SaveToFile() {
+function SaveToFile() { //Saves the player information into a array & into a text file.
 
     var data = JSON.stringify(playerProfile); //cannot read object therefore STRINGIFY!
 
@@ -62,14 +75,42 @@ function SaveToFile() {
     });
 }
 
- function LoadFromFile() {
-         fs.readFile("playerProfile.txt", (err) => {
-             if(err) console.log(err);
-             console.log('\x1b[32m%s\x1b[0m', 'Successfully loaded file');
-         });
- }
+function LoadFromFile() {
+    fs.readFile("playerProfile.txt", (err) => {
+        if (err) console.log(err);
+        console.log('\x1b[32m%s\x1b[0m', 'Successfully loaded file');
+    });
+}
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
+
+server.get("/saveMongo/:playerID/playerHatId/:playerScore", function (req, res){
+
+    var player_ID = req.params.playerID;
+    var player_Hat_Id = req.params.player_Hat_Id;
+    var player_Score = req.params.playerScore;
+
+    player.findOne({ "player_ID": playerID }, (err, player) => { //Finds one user
+        if (!player) { //If we dont find the player within the database
+
+            console.log("Couldnt find the player.");
+
+            var newPlayer = new player({ //Creates a new player
+                "player_ID": playerID,
+                "player_Hat_ID": playerHatID,
+                "player_Score": playerScore
+            });
+
+            res.send({ newPlayer }); //Sends the new player as an object
+
+            newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
+        }
+        else {
+            console.log("Found player: " + player); 
+            res.send({ player }); //The player already exists in the database & will be sent to us.
+        }
+    }); 
+});
 
     server.get("/load", function (req, res) {
         fs.readFile("playerProfile.txt", function (err, buf) {
