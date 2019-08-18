@@ -195,8 +195,8 @@ server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!
     var score;
     player.find({ "player_Score": score});
 
-    limit(10); //top 10
     sort({ score: -1 }) //Sort
+    score.limit(10); //top 10
 
     res.send({ score});
     console.log("leaderboardthings");
