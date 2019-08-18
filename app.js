@@ -30,13 +30,8 @@ console.log("Hello Tookey! Welcome to your server.")
 //------- "Variables" 
 // var x = []; -> An array.
 // var x = {}; -> An object (Objects can more properties inside, aka x.health or x.speed.value).
-var players = [];
-var playerPos = { x: 0, y: 0, z: 0 };
 var playerProfile = []
 
-
-var leaderboard = [];
-var matches = [];
 var pendingMatches = [];
 
 //------- Creating "Functions"
@@ -84,7 +79,7 @@ function LoadFromFile() {
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
 
-server.get("/saveMongo/:playerID/playerHatId/:playerScore", function (req, res){
+server.get("/saveMongo/:playerID/:playerHatId/:playerScore", function (req, res, next){
 
     var player_ID = req.params.playerID;
     var player_Hat_Id = req.params.playerHatId;
