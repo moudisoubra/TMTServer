@@ -107,7 +107,7 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
     });
 });
 
-server.get("/ChangePlayerScore/:playerID/:playerScore", function (req, res, next) {
+server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
     var playerID = req.params.playerID;
     var playerScore = req.params.playerScore;
 
@@ -122,10 +122,9 @@ server.get("/ChangePlayerScore/:playerID/:playerScore", function (req, res, next
             res.send({ player });
         }
     });
-
 });
 
-server.get("/ChangePlayerHat/:playerID/:playerHatID", function (req, res, next) {
+server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 
     var playerID = req.params.playerID;
     var playerHatID = req.params.playerHatID;
@@ -141,11 +140,10 @@ server.get("/ChangePlayerHat/:playerID/:playerHatID", function (req, res, next) 
             res.send({ player });
         }
     });
-
 });
 
 
-server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res){
+server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
 
     var player_ID = req.params.playerID;
     var player_Hat_ID = req.params.playerHatID;
@@ -173,7 +171,7 @@ server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res)
     }); 
 });
 
-server.get("/FindPlayer/:playerID", function (req, res, next) {
+server.get("/findPlayerMongo/:playerID", function (req, res) {
 
     var playerID = req.params.playerID;
 
@@ -188,10 +186,25 @@ server.get("/FindPlayer/:playerID", function (req, res, next) {
             var string = player.toString();
 
             res.send(player);
-
         }
-
     });
+});
+
+server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    find({"player_Score" : player_Score});
+
+    limit(10); //top 10
+    sort({ player_Score: -1 }) //Sort
+
+    res.send({ player_Score: -1 });
+    console.log("leaderboardthings");
+});
+
+    limit(10)
+
+    sort({ occupation: -1 })
+
 });
 
     server.get("/load", function (req, res) {
@@ -202,6 +215,8 @@ server.get("/FindPlayer/:playerID", function (req, res, next) {
             console.log(string + "zis iz the load from ze file");
         });
      });
+
+//----- not monogo server ----
 
     server.get("/print", function (req, res) {
         console.log("Printed all PlayerProfiles");
@@ -232,10 +247,6 @@ server.get("/FindPlayer/:playerID", function (req, res, next) {
     });
 
     //--------------------------------------------------- P O S T ------------------------------------------------------------
-
-    /*server.post("/leaderboard", function (req, res) {
-     
-    });*/
 
 setInterval(SaveToFile, 3000);
 
