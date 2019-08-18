@@ -192,30 +192,33 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
 
 server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    var score;
-    //player.find({ "player_Score": score});
+    player.find({ "player_Score": score }, (err, Player) => { 
+        if (!Player)
+        { 
+            //JUST ERROR THINGS
+        }
 
+        else {
+            Player.sort({ score: -1 })
+            res.send({ score });
+        }
+
+    });
     //score.sort: { score - 1 };//Sort
     //score.limit(10); //top 10
 
     //res.send({ score});
     //console.log("leaderboardthings");
-
+   /*
     player.find({
-        player_Score: score // Search Filters
-    },
-        ['player_Score'], // Columns to Return
-        {
-            skip: 0, // Starting Row
-            limit: 10, // Ending Row//
-            sort: {
-                score: -1 //Sort by Date Added DESC
-            }
-        },
-        function (err, Score) {
-            res.send({ Score}); // Do something with the array of 10 objects
-        })
-});
+        player_Score: score; // Search Filters
+        res.send({ score });
+    };
+        */
+    /*    function (err, Score) {
+            res.send({ Score }); // Do something with the array of 10 objects
+        })*/
+
 
     server.get("/load", function (req, res) {
         fs.readFile("playerProfile.txt", function (err, buf) {
