@@ -39,7 +39,9 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
 //---------------------------------------------------- F U N C T I O N S ------------------------------------------------------------
 
 function SaveToFile() {
-    var data = { playerProfile };
+
+    var data = JSON.stringify(playerProfile); //cannot read object therefore STRINGIFY!
+
     fs.writeFile("playerProfile.txt", data, (err) => {
         if (err) console.log(err);
         console.log('\x1b[32m%s\x1b[0m', 'Successfully Written To File');
@@ -57,6 +59,7 @@ function SaveToFile() {
 
     server.get("/load", function (req, res) {
         fs.readFile("playerProfile.txt", function (err, buf) {
+
             var string = buf.toString();
             res.send(JSON.parse(string));
             console.log(string + "zis iz the load from ze file");
@@ -92,15 +95,6 @@ function SaveToFile() {
         }
     });
 
-    /*server.get("/readFile", function (req, res) {
-    
-        fs.readFile("playerProfile.txt", function (err, buf) {
-            res.send(buf.toString());
-            console.log('\x1b[32m%s\x1b[0m', 'Successfully Read File'); 
-        });
-    
-    });*/
-
     //--------------------------------------------------- P O S T ------------------------------------------------------------
 
     /*server.post("/leaderboard", function (req, res) {
@@ -108,7 +102,7 @@ function SaveToFile() {
     });*/
 
 setInterval(SaveToFile, 3000);
-server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
+server.listen(3000, function () { //process.env.PORT heruko port that works
 
     //console.log(process.env.PORT);
 
