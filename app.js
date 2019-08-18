@@ -6,10 +6,24 @@
 var express = require("express");
 var fs = require("fs"); //Used for saving files
 var server = express(); //enables us to use express for server creation.
+var mongoose = require('mongoose'); //For database 
 //var uuid = require("uuid"); //The node name for generating a GUID.
 //what is a GUID? -> a string which is guarnteed to be unique (Takes time, processor id + random string).
 
 server.use(express.urlencoded()); //Express can be used for anything, need to specify for unity. Can used JSONENCODED
+
+var uristring =
+    process.env.MONGODB_URI || 
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/MeltDown';
+
+mongoose.connect(uristring, { useNewUrlParser: true });
+
+var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function () {
+        console.log("Connected to Mongoose!!!!! Mabroooook");
+    });
 
 console.log("Hello Tookey! Welcome to your server.")
 
@@ -87,7 +101,6 @@ function SaveToFile() {
         res.end();
     });
 
-
     server.get("/match", function (req, res) {
         if (pendingMatches.length == 0) {
             var match = {};
@@ -102,6 +115,7 @@ function SaveToFile() {
     });*/
 
 setInterval(SaveToFile, 3000);
+
 server.listen(process.env.PORT || 3000, function () { //process.env.PORT heruko port that works
 
     //console.log(process.env.PORT);
