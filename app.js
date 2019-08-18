@@ -111,13 +111,8 @@ server.get("/removeAllMongo", function (req, res) {
 
     player.find(function (err, Player) {
         if (err) return console.error(err);
-        for (var i = 0; i < Player.length; i++) {
-            Player.remove;
-        }
-        res.send({ Player });
-        console.log("removedall")
+        player.deleteMany({});
     });
-
 });
    
 
