@@ -86,7 +86,7 @@ server.get("/saveMongo/:playerID/:playerHatId/:playerScore", function (req, res,
     var player_Hat_Id = req.params.playerHatId;
     var player_Score = req.params.playerScore;
 
-    player.findOne({ "player_ID": playerID }, (err, Player) => { //Finds one user
+    player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
         if (!Player) { //If we dont find the player within the database
 
             console.log("Couldnt find the player.");
