@@ -102,6 +102,8 @@ server.get("/clearOneMongo/:playerID/:playerHatID/:playerScore", function (req, 
 
 server.get("/listAllMongo", function (req, res) {
 
+    var player_ID = req.params.playerID;
+
     player.find({ "player_ID": player_ID }, (err, Player) => {
 
         console.log("Listing all players ");
