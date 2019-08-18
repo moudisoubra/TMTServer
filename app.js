@@ -80,7 +80,7 @@ function LoadFromFile() {
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
 
-server.get("/clearOneMongo/:playerID", function (req, res) {
+server.get("/clearOneMongo/:playerID", function (req, res) { //REMOVES ONE PLAYER FROM THE DATABASE BASED ON ID SCORE
 
     //Sets the information based on the input from the user
     var player_ID = req.params.playerID;
@@ -98,14 +98,24 @@ server.get("/clearOneMongo/:playerID", function (req, res) {
 
 });
 
-server.get("/listAllMongo", function (req, res) {
+server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DATABASE
 
     player.find(function (err, Player) {
         if (err) return console.error(err);
         console.log(Player);
         res.send({ Player });
-
     });
+});
+
+server.get("/removeAllMongo", function (req, res) {
+
+    player.find(function (err, Player) {
+        if (err) return console.error(err);
+        player.remove();
+        res.send({ Player });
+        console.log("removedall")
+    });
+
 });
    
 
