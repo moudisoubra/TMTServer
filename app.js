@@ -107,6 +107,16 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
     });
 });
 
+server.get("/leaderboardMongo", function (req, res) {
+
+    player.find(function (err, Player) {
+        if (err) return console.error(err);
+        console.log(Player);
+        res.send({ Player });
+    });
+});
+
+
 server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
     var playerID = req.params.playerID;
     var playerScore = req.params.playerScore;
@@ -189,43 +199,6 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
         }
     });
 });
-
-server.get("/leaderboardMongo", function (req, res) { 
-
-    player.find(function (err, Player) { //Find all players to figure out 
-        if (err) return console.error(err);
-        console.log(Player);
-        res.send({ Player });
-    });
-
-    });
-    /*player.find({ "player_Score": score }, (err, Player) => { 
-        if (!Player)
-        { 
-            //JUST ERROR THINGS
-        }
-
-        else {
-            console.log("I AM REACHING THE SORTING BUT I AM NOT DOING THE SORTING");
-            Player.sort({ score: -1 });
-            res.send({ score });
-        }
-
-    });*/
-    //score.sort: { score - 1 };//Sort
-    //score.limit(10); //top 10
-
-    //res.send({ score});
-    //console.log("leaderboardthings");
-   /*
-    player.find({
-        player_Score: score; // Search Filters
-        res.send({ score });
-    };
-        */
-    /*    function (err, Score) {
-            res.send({ Score }); // Do something with the array of 10 objects
-        })*/
 
 
     server.get("/load", function (req, res) {
