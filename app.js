@@ -190,9 +190,16 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
     });
 });
 
-server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+server.get("/leaderboardMongo", function (req, res) { 
 
-    player.find({ "player_Score": score }, (err, Player) => { 
+    player.find(function (err, Player) { //Find all players to figure out 
+        if (err) return console.error(err);
+        console.log(Player);
+        res.send({ Player });
+    });
+
+    });
+    /*player.find({ "player_Score": score }, (err, Player) => { 
         if (!Player)
         { 
             //JUST ERROR THINGS
@@ -204,7 +211,7 @@ server.get("/leaderboardMongo", function (req, res) { //!!!!!!!!!!!!!!!!!!!!!!!!
             res.send({ score });
         }
 
-    });
+    });*/
     //score.sort: { score - 1 };//Sort
     //score.limit(10); //top 10
 
