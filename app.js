@@ -52,7 +52,7 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
 // Everything in mongoose derives from schemas, so we create a schema for the player profile.
 var playerProfileMongo = new mongoose.Schema({
     player_ID: Number,
-    player_Hat_Id: Number,
+    player_Hat_ID: Number,
     player_Score: Number,
     //Add player colour
 });
@@ -83,7 +83,7 @@ function LoadFromFile() {
 server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res, next){
 
     var player_ID = req.params.playerID;
-    var player_Hat_Id = req.params.playerHatID;
+    var player_Hat_ID = req.params.playerHatID;
     var player_Score = req.params.playerScore;
 
     player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
@@ -93,7 +93,7 @@ server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res,
 
             var newPlayer = new player({ //Creates a new player
                 "player_ID": player_ID,
-                "player_Hat_ID": player_Hat_Id,
+                "player_Hat_ID": player_Hat_ID,
                 "player_Score": player_Score
             });
 
