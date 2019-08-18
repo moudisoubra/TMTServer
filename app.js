@@ -111,11 +111,19 @@ server.get("/leaderboardMongo", function (req, res) {
 
     /*player.find(function (err, Player) {
         if (err) return console.error(err);
-    }).sort({ Player: -1 });*/
+    }).sort({ Player: -1 });
 
-    res.send(player.find(function (err, Player) {
-        Player.sort({ Player: -1 });
-    }));
+    res.send({ player });*/
+
+    player.find(function (err, Player) {
+        if (err) return console.error(err);
+        
+    res.send({ Player });
+    }).sort({ Player: -1 });
+    res.send({ Player });
+
+
+
 });
 
 
