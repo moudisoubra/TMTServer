@@ -7,6 +7,7 @@ var express = require("express");
 var fs = require("fs"); //Used for saving files
 var server = express(); //enables us to use express for server creation.
 var mongoose = require('mongoose'); //For database 
+
 //var uuid = require("uuid"); //The node name for generating a GUID.
 //what is a GUID? -> a string which is guarnteed to be unique (Takes time, processor id + random string).
 
@@ -85,8 +86,8 @@ server.get("/saveMongo/:playerID/:playerHatId/:playerScore", function (req, res,
     var player_Hat_Id = req.params.playerHatId;
     var player_Score = req.params.playerScore;
 
-    player.findOne({ "player_ID": playerID }, (err, player) => { //Finds one user
-        if (!player) { //If we dont find the player within the database
+    player.findOne({ "player_ID": playerID }, (err, Player) => { //Finds one user
+        if (!Player) { //If we dont find the player within the database
 
             console.log("Couldnt find the player.");
 
@@ -101,8 +102,8 @@ server.get("/saveMongo/:playerID/:playerHatId/:playerScore", function (req, res,
             newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
         }
         else {
-            console.log("Found player: " + player); 
-            res.send({ player }); //The player already exists in the database & will be sent to us.
+            console.log("Found player: " + Player); 
+            res.send({ Player }); //The player already exists in the database & will be sent to us.
         }
     }); 
 });
