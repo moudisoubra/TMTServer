@@ -102,9 +102,13 @@ server.get("/clearOneMongo/:playerID/:playerHatID/:playerScore", function (req, 
 
 server.get("/listAllMongo", function (req, res) {
 
-    res.send({ player });
+    player.find({ "player_ID": player_ID }, (err, Player) => {
 
+        console.log("Listing all players ");
+        res.send({ Player });
+    });
 });
+
 
 server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res){
 
