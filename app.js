@@ -80,10 +80,10 @@ function LoadFromFile() {
 
     //---------------------------------------------------- G E T ------------------------------------------------------------
 
-server.get("/saveMongo/:playerID/:playerHatId/:playerScore", function (req, res, next){
+server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res, next){
 
     var player_ID = req.params.playerID;
-    var player_Hat_Id = req.params.playerHatId;
+    var player_Hat_Id = req.params.playerHatID;
     var player_Score = req.params.playerScore;
 
     player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
