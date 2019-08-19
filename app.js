@@ -109,7 +109,7 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 
 server.get("/leaderboardMongo", function (req, res) {
 
-    player.find(function (err, Player) {
+    player.find({ "player_Score": player_Score }, function (err, Player) {
         if (err) return console.error(err);
         var leaderboard = Player.sort({player_Score : -1});
 
