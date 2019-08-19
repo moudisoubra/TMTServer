@@ -110,11 +110,14 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 server.get("/leaderboardMongo", function (req, res) {
 
     player.find(function (err, Player) {
-        if (err) return console.error(err);
-        var leaderboard = Player.sort([['player_Score', -1]]).stringify;
+        if (err) return console.error("Sort crashed");
+
+        //var leaderboard = Player.sort('player_Score', -1).stringify;
+        var leaderboard = Player.sort({ field: 'player_Score', test: -1 });
 
         console.log(leaderboard);
-        res.send({ leaderboard });
+        var stringedBoard = leaderboard.stringify;
+        res.send({ stringedBoard });
     });
 
             //Player.sort({ player_ID: 1 }.stringify);
