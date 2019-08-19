@@ -109,13 +109,22 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 
 server.get("/leaderboardMongo", function (req, res) {
 
-    player.find({ "player_Score": player_Score }, function (err, Player) {
+    player.find(function (err, Player) {
         if (err) return console.error(err);
-        var leaderboard = Player.sort({player_Score : -1});
+        var highScore = Player.player_Score;
+        var leaderboard = Player.sort({highScore : -1});
 
         console.log(leaderboard);
         res.send({ leaderboard });
     });
+
+    /*player.find(function (err, Player) {
+        if (err) return console.error(err);
+        var leaderboard = Player.sort();
+
+        console.log(leaderboard);
+        res.send({ leaderboard });
+    });*/
 
     /*var leaderboard = player.find({ Player }).sort({ player_Score: -1 });
     console.log(leaderboard);
