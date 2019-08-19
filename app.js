@@ -111,7 +111,7 @@ server.get("/leaderboardMongo", function (req, res) {
 
     var leaderboard = player.find({ player_Score: { $exists: true } }).sort({ player_Score: -1 });
 
-    res.send({ leaderboard } );
+    res.send(leaderboard.stringify);
 
     /*player.find(function (err, Player) {
         if (err) return console.error(err);
