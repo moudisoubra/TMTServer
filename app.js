@@ -112,9 +112,11 @@ server.get("/leaderboardMongo", function (req, res) {
     player.find(function (err, Player) {
         if (err) return console.error(err);
 
-        var leaderboard = Player.player_Score;
+        Player.sort({ player_Score: -1 });
+        Console.log("THIS IS THE PLAYER SORTED>>>>>>>>>>>> " + Player);
+        var leaderboard = Player;
 
-        //leaderboard.player_Score.sort((a, b) => a - b);
+        //leaderboard.sort();
 
         //var array1 = [1, 30, 4, 21, 100000];
         //array1.sort((a, b) => a - b);
