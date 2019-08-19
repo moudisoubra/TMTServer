@@ -111,12 +111,12 @@ server.get("/leaderboardMongo", function (req, res) {
 
     player.find(function (err, Player) {
         if (err) return console.error(err);
-        var highScore = Player.player_Score;
-        var leaderboard = Player.sort({highScore : -1});
+        var leaderboard = Player.sort({ player_ID: 1 });
 
         console.log(leaderboard);
         res.send({ leaderboard });
     });
+
 
     /*player.find(function (err, Player) {
         if (err) return console.error(err);
