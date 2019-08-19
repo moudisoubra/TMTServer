@@ -109,22 +109,12 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 
 server.get("/leaderboardMongo", function (req, res) {
 
-    var playerScore;
+    player.find(function (err, Player) {
+        if (err) return console.error(err);
+        var leaderboard = Player.sort({ "player_Score": -1 }).stringify;
 
-    player.find({"player_Score" : playerScore}, (err, Player) =>
-
-    {
-        if (!Player) {
-            console.log("NO PLAYER");
-        }
-        else {
-            //var leaderboard = Player.sort('player_Score', -1).stringify;
-            var leaderboard = Player.sort({ field: "player_Score", test: -1 });
-
-            console.log(leaderboard);
-            var stringedBoard = leaderboard.stringify;
-            res.send({ stringedBoard });
-        }
+        console.log(leaderboard);
+        res.send({ leaderboard });
     });
 
             //Player.sort({ player_ID: 1 }.stringify);
@@ -171,70 +161,69 @@ server.get("/leaderboardMongo", function (req, res) {
     });
 
 
-    //server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
-    //    var playerID = req.params.playerID;
-    //    var playerScore = req.params.playerScore;
+    server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
+        var playerID = req.params.playerID;
+        var playerScore = req.params.playerScore;
 
-    //    Player.findOne({ "player_ID": playerID }, (err, player) => {
+        Player.findOne({ "player_ID": playerID }, (err, player) => {
+            if (!player) {
+                console.log("Didnt find a player with that ID");
+            }
+            else {
+                console.log("Found player: " + player);
+                player.player_Score = playerScore;
+                player.save(function (err) { if (err) console.log('Error on save!') });
+                res.send({ player });
+            }
+        });
+    });
 
-    //        if (!player) {
-    //            console.log("Didnt find a player with that ID");
-    //        }
-    //        else {
-    //            console.log("Found player: " + player);
-    //            player.player_Score = playerScore;
-    //            player.save(function (err) { if (err) console.log('Error on save!') });
-    //            res.send({ player });
-    //        }
-    //    });
-    //});
+    server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 
-    //server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
+        var playerID = req.params.playerID;
+        var playerHatID = req.params.playerHatID;
 
-    //    var playerID = req.params.playerID;
-    //    var playerHatID = req.params.playerHatID;
-
-    //    Player.findOne({ "player_ID": playerID }, (err, player) => {
-    //        if (!player) {
-    //            console.log("Didnt find a player with that ID");
-    //        }
-    //        else {
-    //            console.log("Found player: " + player);
-    //            player.player_Hat_ID = playerHatID;
-    //            player.save(function (err) { if (err) console.log('Error on save!') });
-    //            res.send({ player });
-    //        }
-    //    });
-    //});
+        Player.findOne({ "player_ID": playerID }, (err, player) => {
+            if (!player) {
+                console.log("Didnt find a player with that ID");
+            }
+            else {
+                console.log("Found player: " + player);
+                player.player_Hat_ID = playerHatID;
+                player.save(function (err) { if (err) console.log('Error on save!') });
+                res.send({ player });
+            }
+        });
+    });
 
 
-    //server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
+    server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
 
-    //    var player_ID = req.params.playerID;
-    //    var player_Hat_ID = req.params.playerHatID;
-    //    var player_Score = req.params.playerScore;
+        var player_ID = req.params.playerID;
+        var player_Hat_ID = req.params.playerHatID;
+        var player_Score = req.params.playerScore;
 
-    //    player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
-    //        if (!Player) { //If we dont find the player within the database
+        player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
+            if (!Player) { //If we dont find the player within the database
 
-    //            console.log("Couldnt find the player.");
+                console.log("Couldnt find the player.");
 
-    //            var newPlayer = new player({ //Creates a new player
-    //                "player_ID": player_ID,
-    //                "player_Hat_ID": player_Hat_ID,
-    //                "player_Score": player_Score
-    //            });
+                var newPlayer = new player({ //Creates a new player
+                    "player_ID": player_ID,
+                    "player_Hat_ID": player_Hat_ID,
+                    "player_Score": player_Score
+                });
 
-    //            res.send({ newPlayer }); //Sends the new player as an object
+                res.send({ newPlayer }); //Sends the new player as an object
 
-    //            newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
-    //        }
-    //        else {
-    //            console.log("Found player: " + Player);
-    //            res.send({ Player }); //The player already exists in the database & will be sent to us.
-    //        }
-    //    });
-    //});
+                newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
+            }
+            else {
+                console.log("Found player: " + Player);
+                res.send({ Player }); //The player already exists in the database & will be sent to us.
+            }
+        });
+    });
 
     server.get("/findPlayerMongo/:playerID", function (req, res) {
 
