@@ -111,7 +111,9 @@ server.get("/leaderboardMongo", function (req, res) {
 
     player.find(function (err, Player) {
         if (err) return console.error(err);
-        var leaderboard = Player.sort({ player_ID: 1 });
+        //var leaderboard = Player.sort({ player_ID: 1});
+        var leaderboard = Player.sort({ "player_ID": 1});
+        //    sort(compareFn?: (a: T, b: T) => number): this;
 
         console.log(leaderboard);
         res.send({ leaderboard });
