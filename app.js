@@ -110,7 +110,6 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 server.get("/leaderboardMongo", function (req, res) {
 
     player.find(function (err, Player) {
-        if (err) return console.error("Sort crashed");
 
         if (!Player) {
             console.log("NO PLAYER");
