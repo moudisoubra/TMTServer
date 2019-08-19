@@ -109,56 +109,15 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
 
 server.get("/leaderboardMongo", function (req, res) {
 
-    player.find({}).sort({ player_Score: 1 }).exec(function (err, scores) {
+    player.find({}).sort({ player_Score: 1 }).limit(10).exec(function (err, scores) {
 
         var leaderboard = scores;
         console.log(leaderboard);
         res.send({ leaderboard });
 
-    });;
-
-            //Player.sort({ player_ID: 1 }.stringify);
-        //var leaderboard = Player.sort({ "player_ID": 1}).c;
-        //    sort(compareFn?: (a: T, b: T) => number): this;
-
-    /*player.find(function (err, Player) {
-        if (err) return console.error(err);
-        var leaderboard = Player.sort();
-
-        console.log(leaderboard);
-        res.send({ leaderboard });
-    });*/
-
-    /*var leaderboard = player.find({ Player }).sort({ player_Score: -1 });
-    console.log(leaderboard);
-    res.send(leaderboard);*/
-
-    /*player.find(function (err, Player) {
-        if (err) return console.error(err);
-    }).sort({ Player: -1 });
-
-    res.send({ player });*/
-
-   //s db.player.find({})
-
-   /* var player_ID = req.params.playerID;
-    player.find({ "player_ID": player_ID }, (err, Player) => {
-
-        Player.sort({ Player: -1 });
-        res.send({ Player });
-    });*/
-        /*player.find({
-            "player_ID": player_ID, function(err, Player) {
-                if (err) return console.error(err);
-
-
-
-            }).sort({ Player: -1 });
-        res.send({ Player });
-        */
-
-
     });
+
+});
 
 
     server.get("/changePlayerScoreMongo/:playerID/:playerScore", function (req, res) {
