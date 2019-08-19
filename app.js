@@ -114,11 +114,11 @@ server.get("/leaderboardMongo", function (req, res) {
 
         var leaderboard = Player;
 
-        leaderboard.sort({ player_Score: -1 }.stringify);
+        leaderboard.player_Score.sort((a, b) => a - b);
 
-        var array1 = [1, 30, 4, 21, 100000];
-        array1.sort((a, b) => a - b);
-        console.log("THIS IS THE ARRAY>>>>>>>>>>>>>>>>>>>>> " + array1);
+        //var array1 = [1, 30, 4, 21, 100000];
+        //array1.sort((a, b) => a - b);
+        //console.log("THIS IS THE ARRAY>>>>>>>>>>>>>>>>>>>>> " + array1);
 
         console.log(leaderboard);
         res.send({ leaderboard });
