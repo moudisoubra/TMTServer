@@ -107,19 +107,19 @@ server.get("/listAllMongo", function (req, res) { //LISTS ALL PLAYERS IN THE DAT
     });
 });
 
-server.sort("/leaderboardMongo", function (req, res) {
+server.get("/leaderboardMongo", function (req, res) {
 
     player.find(function (err, Player) {
         if (err) return console.error(err);
-        var leaderboard = Player.sort({ "player_Score": -1 })
-            //Player.sort({ player_ID: 1 }.stringify);
-        //var leaderboard = Player.sort({ "player_ID": 1}).c;
-        //    sort(compareFn?: (a: T, b: T) => number): this;
+        var leaderboard = Player.sort({ "player_Score": -1 }).stringify;
 
         console.log(leaderboard);
         res.send({ leaderboard });
     });
 
+            //Player.sort({ player_ID: 1 }.stringify);
+        //var leaderboard = Player.sort({ "player_ID": 1}).c;
+        //    sort(compareFn?: (a: T, b: T) => number): this;
 
     /*player.find(function (err, Player) {
         if (err) return console.error(err);
