@@ -116,7 +116,8 @@ server.get("/clearOneMongo/:playerID", function (req, res) { //REMOVES ONE PLAYE
         }
         else {
             console.log("Found player: " + Player);
-            res.send({ Player }); //The player already exists in the database & will be sent to us.
+            var string = "Deleted Player";
+            res.send({ Player } & string.toString()); //The player already exists in the database & will be sent to us.
         }
     }); 
 
