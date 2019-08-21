@@ -194,13 +194,17 @@ server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res)
             var newPlayer = new player({ //Creates a new player
                 "player_ID": player_ID,
                 "player_Hat_ID": player_Hat_ID,
-                "player_Score": player_Score
+                "player_Score": player_Score,
+                "r": r,
+                "g": g,
+                "b": b
             });
 
             res.send({ newPlayer }); //Sends the new player as an object
 
              newPlayer.save(function (err) { if (err) console.log('Error on save!') }); //Saves the new player to the database.
-        }
+            }
+
         else {
             console.log("Found player: " + Player);
             res.send({ Player }); //The player already exists in the database & will be sent to us.
@@ -225,6 +229,17 @@ server.get("/findPlayerMongo/:playerID", function (req, res) {
             res.send(Player);
         }
     });
+});
+
+server.get("/ClearAll", function (req, res) { //BIG RED BUTTON!! :D
+
+    player.remove({}, function (err) {   
+        console.log('DataBase Wiped')
+        var string = "DataBase Wiped";
+    
+        res.send(string.toString());
+    });
+
 });
 
 //------------------------------------ E N D ----------------------------
