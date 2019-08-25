@@ -188,12 +188,15 @@ server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 });
 
 
-server.get("/saveMongo/:playerID/:playerName/:playerHatID/:playerScore", function (req, res) {
+server.get("/saveMongo/:playerID/:playerName/:playerHatID/:playerScore/:r/:g/:b", function (req, res) {
 
     var player_ID = req.params.playerID;
     var player_Name = req.params.player_Name;
     var player_Hat_ID = req.params.playerHatID;
     var player_Score = req.params.playerScore;
+    var r = req.params.r;
+    var g = req.params.g;
+    var b = req.params.b;
 
     player.findOne({ "player_ID": player_ID }, (err, Player) => { //Finds one user
         if (!Player) { //If we dont find the player within the database
