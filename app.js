@@ -191,7 +191,7 @@ server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 server.get("/saveMongo/:playerID/:playerName/:playerHatID/:playerScore/:r/:g/:b", function (req, res) {
 
     var player_ID = req.params.playerID;
-    var player_Name = req.params.player_Name;
+    var player_Name = req.params.playerName;
     var player_Hat_ID = req.params.playerHatID;
     var player_Score = req.params.playerScore;
     var r = req.params.r;
