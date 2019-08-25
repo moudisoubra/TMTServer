@@ -49,6 +49,7 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
 // Everything in mongoose derives from schemas, so we create a schema for the player profile.
 var playerProfileMongo = new mongoose.Schema({
     player_ID: Number, //Unique id of the player
+    player_Name: String,
     player_Hat_ID: Number, //The hat they have chosen in game
     player_Score: Number, //Current score
     r: Number, //RGB for choosing the colour
@@ -124,7 +125,6 @@ server.get("/clearOneMongo/:playerID", function (req, res) { //REMOVES ONE PLAYE
             }
             //res.write({ Player }); //The player already exists in the database & will be sent to us.  & string.toString()
             res.send(thingToSend);
-            
         }
     }); 
 
@@ -188,9 +188,10 @@ server.get("/changePlayerHatMongo/:playerID/:playerHatID", function (req, res) {
 });
 
 
-server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res) {
+server.get("/saveMongo/:playerID/:playerName/:playerHatID/:playerScore", function (req, res) {
 
     var player_ID = req.params.playerID;
+    var player_Name = req.params.player_Name;
     var player_Hat_ID = req.params.playerHatID;
     var player_Score = req.params.playerScore;
 
@@ -201,6 +202,7 @@ server.get("/saveMongo/:playerID/:playerHatID/:playerScore", function (req, res)
 
             var newPlayer = new player({ //Creates a new player
                 "player_ID": player_ID,
+                "player_Name": player_Name,
                 "player_Hat_ID": player_Hat_ID,
                 "player_Score": player_Score,
                 "r": r,
