@@ -48,7 +48,7 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
 
 // Everything in mongoose derives from schemas, so we create a schema for the player profile.
 var playerProfileMongo = new mongoose.Schema({
-    player_ID: Number, //Unique id of the player
+    player_ID: String, //Unique id of the player
     player_Name: String,
     player_Hat_ID: Number, //The hat they have chosen in game
     player_Score: Number, //Current score
