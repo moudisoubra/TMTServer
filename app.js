@@ -34,8 +34,8 @@ console.log("Hello Tookey! Welcome to your server.")
 var playerProfile = [] //For saving to file rather than the mongo database
 
 //------- Creating "Functions"
-//Post: For uploading any information to the server
-//Get: Accessing any information from the server
+//Post: For uploading any information to the server (More secure, requests & information is embodied in the html page body)
+//Get: Accessing any information from the server (Less secure, requests & information embodied in the url)
 
 server.get(/*Takes the name of the request*/ "/example", /*either pass in a function or create one*/ function (req, res) {
 
@@ -47,9 +47,9 @@ server.get(/*Takes the name of the request*/ "/example", /*either pass in a func
 //---------------------------------------------------- M o n g o o s e -- S c h e m a ------------------------------------------------------------
 
 // Everything in mongoose derives from schemas, so we create a schema for the player profile.
-var playerProfileMongo = new mongoose.Schema({
+var playerProfileMongo = new mongoose.Schema({ //Maps to the collections DB
     player_ID: String, //Unique id of the player
-    player_Name: String,
+    player_Name: String, //Specifed name in the game
     player_Hat_ID: Number, //The hat they have chosen in game
     player_Score: Number, //Current score
     r: Number, //RGB for choosing the colour
